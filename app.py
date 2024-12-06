@@ -2,27 +2,27 @@
 import os
 
 import aws_cdk as cdk
+from dotenv import load_dotenv
 
 from aws_proxy_server.aws_proxy_server_stack import AwsProxyServerStack
 
+# Load environment variables from .env file
+load_dotenv()
 
 app = cdk.App()
-AwsProxyServerStack(app, "AwsProxyServerStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+# Fetch account and region from env variable
+account_id = os.getenv("ACCOUNT_ID")
+region = os.getenv("REGION")
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+if not account_id or not region:
+    raise ValueError("ACCOUNT_ID and REGION must be set in the .env file.")
 
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
+env = cdk.Environment(
+    account= account_id,  # Replace with your AWS account ID
+    region= region       # Replace with your desired AWS region
+)
 
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
-
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+AwsProxyServerStack(app, "AwsProxyServerStack", env=env)
 
 app.synth()
