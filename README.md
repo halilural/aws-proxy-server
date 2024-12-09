@@ -1,5 +1,7 @@
 Here's the updated `README.md` reflecting that the **SSM Parameters are created by CDK**:
 
+You'll find more details in this [article](https://medium.com/@halilural5/overcoming-binance-trading-static-ip-challenges-with-aws-ec2-proxy-server-22983976a581).
+
 ---
 
 # **AWS EC2 Proxy Server**
